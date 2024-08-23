@@ -1,0 +1,267 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: white;
+  background-color: #030615;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+  /* flex-direction: column; */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.imgContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.imgContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* width: 100%; height: 100%;：图片的宽度和高度设置为占满整个容器。
+object-fit: cover;：图片会被缩放和裁剪，以完全填满容器，同时保持其原始的宽高比。图像可能会部分超出容器，但不会变形或留下空白。 */
+
+
+.bgImage {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  object-fit: cover;
+}
+
+footer{
+  position: fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  /* align-items: center; */
+  justify-content:space-between;
+  gap: 0rem;
+  padding: 1rem;
+}
+
+footer div{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;/*把footer <h2> <h1>上下间隔开*/
+}
+
+footer h2{
+  font-size: 1.4rem;
+}
+
+footer h1{
+  font-size: 0.9rem;
+  font-weight: 200;
+}
+
+.btnSet {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 1rem;
+  bottom: 0;
+  right: 0;
+  gap: 0.5rem;
+}
+
+.btnSet button {
+  background: transparent;
+  border:none;
+  outline:none;
+  color:white;
+  padding:0.5rem 0.2rem;
+  transition-duration:200ms;
+  cursor: pointer;
+}
+
+.btnSet button i {
+  font-size: 1.2rem;
+}
+
+.btnSet button:hover {
+  opacity: 0.5;
+}
+
+/*给footer添加阴影*/
+.bgGradient{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(to top, #030615, rgba(255, 255,255,0))
+}
+
+.sideBar{
+  position:fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  z-index:16;
+}
+
+.bgOverlay{
+  position: absolute;
+  inset:0;
+  background:#030615;/*决定sideBar的背景色, 实际上bgOverlay在 sideBarContent下面*/
+  opacity: 0.6;
+}
+
+.sideBarContents{
+  z-index:15;
+  position: relative;
+  display:flex;
+  flex-direction: column;/*sideBarContents纵向排列*/
+  gap: 1rem;
+  padding: 1.3rem;
+  height:100%; 
+  width:90%;
+  max-width:800px;
+  overflow-y: scroll;
+  margin-left: auto;
+  background: #030615;
+}
+
+.sideBarContents h2{
+  font-weight: 200;
+  font-size: 1.4rem;
+}
+
+.sideBarContents div {
+  flex: 1;/*把箭头移至最下方  This uses flex-grow: 1, flex-shrink: 1, flex-basis: auto; */
+}
+
+.sideBarContents button{
+  background: transparent;
+  color:white;/*箭头的颜色为白*/
+  border:none;
+  outline:none;
+  margin-right:auto;
+  cursor:pointer;
+  transition-duration: 200ms;
+  padding: rem;
+}
+
+
+.loadingState{
+  display:flex;
+  align-items: center;/*垂直方向上（即交叉轴方向）*/
+  justify-content: center;/*水平方向上（即交叉轴方向）*/
+  flex: 1;/*相当于拓展可用空间*/
+}
+
+.loadingState i{/*设置loading图标*/
+  opacity:0.2;
+  font-size:3rem;
+  animation: spin 1s linear infinite;
+}
+
+.descriptionContainer{
+  display: flex;
+  flex-direction: column;
+  gap:0.5rem; /*把container与title分离开*/
+
+}
+
+.descriptionTitle{
+  font-size: 1.1rem;
+  font-weight:200;
+}
+
+/* animation: spin 2s linear infinite;：应用名为 spin 的动画，
+持续时间为 2 秒，线性速度（linear），无限次重复（infinite）。 */
+
+@keyframes spin{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg); 
+  }
+}
+
+@media (min-width: 640px){
+  .sideBar{
+    position: relative;
+    inset: unset;
+    min-width: 30%;
+    box-shadow: 0 0 10px 5px #030615;/*创造模糊边缘*/
+  }
+
+  .sideBarContents{
+    margin:unset;
+  }
+}
+
+
+
+/* x 偏移量 | y 偏移量 | 阴影模糊半径 | 阴影扩散半径 | 阴影颜色 */
+
+/* 最小宽度：子元素 .item 的最小宽度将是 30%，即 1000px 的 30%，也就是 300px。
+内容影响：即使内容很少，item 的宽度也不会小于 300px。如果内容的宽度大于 300px，那么 item 会扩展以适应内容的宽度。 */
+
+
+/* 默认的 flex 设置是 0 1 auto;，其中：
+flex-grow: 0;：不自动扩展。
+flex-shrink: 1;：可以缩小。
+flex-basis: auto;：基础大小为内容的自然大小或显式设置的宽度/高度。 */
+
+/* flex-basis: 0; 时，弹性项的初始大小被设置为 0，这意味着在空间分配之前，弹性项的大小为 0。
+这让弹性项能够完全根据 flex-grow 和 flex-shrink 属性来调整大小，而不受基础大小的影响。 */
+
+/* 在 Flexbox 布局中，margin-left: auto; 会将元素推到容器的右边缘。 */
+
+/* display:flex row：默认值，水平排列，左到右。 */
+
+/* width: 设置元素的宽度为其包含块的 100%。
+作用：使 footer 元素的宽度与视口的宽度相同，从左边到右边完全填充视口的宽度。 */
+
+/* 
+position: absolute;：
+
+元素相对于最近的定位祖先元素进行定位。
+脱离文档流，不占据空间。
+随着页面滚动，元素的位置相对于其定位祖先会发生变化。
+
+position: fixed;：
+
+元素相对于视口进行定位。
+脱离文档流，不占据空间。
+元素的位置固定在视口中，即使页面滚动，元素的位置不会改变。 
+
+相对定位 (relative)：
+元素仍然处于文档流中，占据原来的空间。
+通过 top, left, right, bottom 偏移相对于其正常位置进行移动。
+绝对定位 (absolute)：
+元素脱离文档流，不占据原来的空间。
+相对于最近的已定位父级元素进行定位，如果没有，则相对于文档根元素定位。
+固定定位 (fixed)：
+元素脱离文档流，不占据原来的空间。
+相对于浏览器窗口定位，滚动页面时位置保持不变。
+*/
+
+/* inset: 0; 等同于 top: 0; right: 0; bottom: 0; left: 0;。 */
+
+/* z-index 的值是整数，值越大的元素在堆叠上下文中越靠前（即覆盖其他元素）。
+z-index: -1; 将元素放置在较低的堆叠层级，使其在堆叠上下文中位于其他 z-index 值为 0 或更高的元素之后。 */
+
+/* # 用于选择具有特定 id 的单个元素 */
+/* . 用于选择具有特定 class 的元素 */
