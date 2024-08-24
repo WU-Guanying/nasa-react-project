@@ -28,7 +28,12 @@
 .imgContainer{
   display: flex;
   flex-direction: column;
+  max-height:100vh; /*容器规定了最大高度为100%视口，这个容器没有指定长宽，因此长宽由img定*/
 }
+
+/* 重要！！！*/
+/* 假设：如果 .imgContainer 中的图片实际宽度为 500px，.imgContainer 的宽度也会调整为 500px。
+实际效果：由于没有设置 .imgContainer 的宽度，它的宽度会适应内容的宽度，即图片的宽度。 */
 
 .imgContainer img {
   width: 100%;
@@ -115,7 +120,7 @@ footer h1{
   inset: 0;
   display: flex;
   flex-direction: column;
-  z-index:16;
+  z-index:17;
 }
 
 .bgOverlay{
@@ -125,15 +130,18 @@ footer h1{
   opacity: 0.6;
 }
 
+/* 可以在 .sideBarContents 中设置 overflow-y: scroll，这也是一个有效的方法，
+特别是当你希望滚动条只出现在 .sideBarContents 中，而不是整个 .sideBar 的时候。 */
+
 .sideBarContents{
-  z-index:15;
+  z-index:16;
   position: relative;
   display:flex;
   flex-direction: column;/*sideBarContents纵向排列*/
   gap: 1rem;
   padding: 1.3rem;
   height:100%; 
-  width:100%;
+  width:80%;
   max-width:800px;
   overflow-y: scroll;
   margin-left: auto;
@@ -198,18 +206,26 @@ footer h1{
   }
 }
 
+/* 这些样式在更大屏幕（如平板、桌面）上生效，而在小于 640px 的屏幕上不会生效。 */
 @media (min-width: 640px){
   .sideBar{
     position: relative;
     inset: unset;
     min-width: 30%;
+    max-height: 100vh;
     box-shadow: 0 0 10px 5px #030615;/*创造模糊边缘*/
   }
 
   .sideBarContents{
     margin:unset;
+    width:100%;
   }
 }
+/* 如果 .sideBarContents 的内容高度超过了 .sideBar 的 max-height: 100vh，.sideBarContents 可能会需要滚动显示这些内容。为确保 .sideBarContents 的内容可以在 
+.sideBar 内部正确显示，可能需要设置 .sideBar 的 overflow 属性为 auto 或 scroll。 */
+
+/* 在没有明确父容器的情况下，.sideBar 的包含块（即它的宽度计算基础）通常是视口（浏览器窗口）。
+这意味着 min-width: 30%; 将相对于视口的宽度来设置。 */
 
 
 
@@ -265,3 +281,10 @@ z-index: -1; 将元素放置在较低的堆叠层级，使其在堆叠上下文�
 
 /* # 用于选择具有特定 id 的单个元素 */
 /* . 用于选择具有特定 class 的元素 */
+
+/* box-shadow: offset-x offset-y blur-radius spread-radius color;
+offset-x: 阴影相对于元素在水平方向上的偏移量（x 轴）。
+offset-y: 阴影相对于元素在垂直方向上的偏移量（y 轴）。
+blur-radius: 阴影的模糊半径，值越大阴影越模糊，边缘越柔和。
+spread-radius: 阴影的扩展半径，正值使阴影扩大，负值使阴影缩小。
+color: 阴影的颜色，可以是任何有效的颜色值（如十六进制、RGB、RGBA 等）。 */
